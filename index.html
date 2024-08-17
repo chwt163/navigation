@@ -1,0 +1,662 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<title>首页</title>
+<meta charset="utf-8" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<style type="text/css">
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+  /*scroll-behavior: smooth;*/
+  font-family:"Microsoft YaHei UI";
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+header {
+  height: 60px;
+  line-height: 30px;
+  color: #000;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  background-color: rgba(0, 0, 0, 0.0);
+ }
+#sidenav a {
+  position: fixed;
+  right: -38px;
+  transition: 0.3s;
+  padding: 14px;
+  width: 80px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 700;
+  color: #f3f3f3;
+  border-radius: 5px 0 0 5px;
+}
+#sidenav a:hover {
+  right: 0;
+}
+#sidenava {
+  bottom: 80px;
+  background-color: #D7BF63;
+  cursor:pointer
+}
+#sidenavb {
+  bottom: 130px;
+  background-color: #66C1D1;
+}
+#sidenavc {
+  bottom: 180px;
+  background-color: #4CAF50;
+}
+#sidenavd {
+  bottom: 230px;
+  background-color: #f44336;
+}
+#sidenave {
+  bottom: 280px;
+  background-color: #2196F3;
+}
+form {
+  padding: 60px 0 150px 0;
+  position: relative;
+  width: 380px;
+  margin: 0 auto;
+}			
+form .text {
+  display: inline-block;
+  border: 0;
+  padding-left: 5px;
+  width: 300px;
+  height: 35px;
+  font-size: 14px;
+  color: #000001;
+  outline: none;				
+  border: 1px solid #cfcfcf;
+  background-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+}			
+form .search {		
+  width: 80px;
+  height: 35px;
+  right: 0px;
+  border: 1px solid #cfcfcf;
+  outline: none;
+  cursor: pointer;
+  text-align: center;
+  line-height: 35px;
+  background-color: rgba(33, 150, 243, 0.8);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+  color: #eeeeee;
+  position: absolute;
+}
+.group{
+  height:35px;
+  font-size: 14px;
+  color: #f1f1f1;
+  text-shadow: 2px 4px 4px #000000;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+.row {
+  margin: 0 auto;
+  width: 62%;
+}
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.column {
+  float: left;
+  width: 31.33%;
+  margin: 2% 1% 2% 1%;
+  text-align: center;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+  transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -webkit-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+}
+.column:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.card-tit {
+  color: #e2e2e2;
+  font-size: 14px;
+  padding-top: 18px;
+  padding-bottom: 12px;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 40px;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+desc-l{
+  color: #d0d0d0;
+  font-size: 12px;
+  padding-top: 6px;
+  padding-bottom: 1px;
+  padding-left: 10px;
+  padding-right: 10px;
+  line-height: 1.7;
+  height: 50px;
+  display:inline-block;   
+  text-align:left;
+}
+desc-h{
+  height: 50px;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+desc-c{
+  text-align:center;
+}
+.lines {
+  margin: 0 auto;
+  padding: 0px 0px 1px 0px;
+  border-bottom: 1px solid #f1f1f1;
+  box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.7);
+  width: 60%;
+  margin-top: 50px;
+}
+.footer {
+  margin: 0 auto;
+  padding: 10px 20px 10px 20px;
+  width: 60%;
+  font-size: 12px;
+  text-align: center;
+  color: #f1f1f1;
+  text-shadow: 2px 4px 4px #000000;
+  line-height: 2;
+  margin-top: 10px;
+  margin-bottom: -30px;
+}
+body {
+  background: url('https://gitee.com/chwt163/Navigationbg/raw/master/img/bg.jpg');
+  height: 100%;
+  background-attachment:fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.bgimg {
+  background: url('https://api.dujin.org/bing/1920.php');
+  height: 100%;
+  background-attachment:fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+@media (max-width: 768px) {
+body {
+  background: url('https://gitee.com/chwt163/Navigationbg/raw/master/img/bg-s.jpg');
+  height: 100%;
+  background-attachment:fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  }
+header {
+  height: 90px;
+  }
+#sidenav a {
+  right: -35px;
+  width: 70px;
+  }
+form {
+  width: 250px;
+  margin-bottom: -58px;
+  }
+form .text {
+  width: 250px;
+  }			
+form .search {		
+  width: 60px;
+  }
+.row {
+  width: 95%;
+  }
+.column {
+  width: 30.33%;
+  margin: 3% 1.5% 3% 1.5%;
+}
+.card-tit {
+  color: #cdcdcd;
+  padding: 12px 1px 12px 1px;
+  height: 30px;
+  }
+desc-l{
+  color: #bbbbbb;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 1px;
+  padding-right: 1px;
+  line-height: 1.5;
+  height: 33px;
+  display:inline-block;   
+  text-align:left;
+  }
+desc-h{
+  height: 33px;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  }
+.lines {
+  width: 90%;
+}
+.footer {
+  padding: 20px 10px 20px 10px;
+  width: 90%;
+  }
+@media screen and (orientation: landscape) {
+body {
+  background: url('https://gitee.com/chwt163/Navigationbg/raw/master/img/bg-h.jpg');
+  height: 100%;
+  background-attachment:fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+header {
+  height: 30px;
+    }
+#sidenava {
+  bottom: 10px;
+    }
+#sidenavb {
+  bottom: 60px;
+    }
+#sidenavc {
+  bottom: 110px;
+    }
+#sidenavd {
+  bottom: 160px;
+    }
+#sidenave {
+  bottom: 210px;
+    }
+form {
+  padding: 5px 0;
+  }
+.row {
+  width: 70%;
+    }
+.lines {
+  width: 70%;
+  }
+.footer {
+  width: 70%;
+    }
+  }
+}
+  </style>
+</head>
+
+<body>
+
+<script>
+function myFunction() {
+   var element = document.body;
+   element.classList.toggle("bgimg");
+}
+</script>
+
+<!--button onclick="myFunction()">Toggle dark mode</button-->
+
+  <!-- 回到顶部的锚点： -->
+  <header id="top"></header>
+  <!-- 右侧导航卡： -->
+ <div id="sidenav" class="sidenav">
+  <a href="#top" id="sidenave">顶部</a>
+  <a href="#popular" id="sidenavd">常用</a>
+  <a href="#software" id="sidenavc">软件</a>
+  <a href="#other" id="sidenavb">其他</a>
+  <a onclick="myFunction()" id="sidenava">壁纸</a>
+</div> 
+
+<form target="_self" method="get" action="https://cn.bing.com/search?q=">
+  <input type="text" autocomplete="off" placeholder="好好学习，天天向上" name="q" class="text" />
+  <input type="submit" value="搜索" class="search">
+</form>
+
+<!-- 网站的分组锚点： -->
+<div popular id="popular">
+  <div class="group">
+      <p></p>
+  </div>
+</div>
+
+<div class="row">
+
+  <div class="column">
+      <a href="https://tv.cctv.com/live/cctv13/">
+        <div class="card-tit">CCTV13</div>
+        <div class=<desc-c><desc-l><desc-h>央视新闻在线直播</div>
+      </a>
+  </div>
+  
+  <div class="column">
+      <a href="https://m.guancha.cn/">
+        <div class="card-tit">观察者网</div>
+        <div class=<desc-c><desc-l><desc-h>新闻，时事，评论</div>
+      </a>
+  </div>
+  
+  <div class="column">
+      <a href="https://www.myzaker.com/">
+        <div class="card-tit">zaker</div>
+        <div class=<desc-c><desc-l><desc-h>网络新闻聚合</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://www.oschina.net">
+        <div class="card-tit">oschina</div>
+        <div class=<desc-c><desc-l><desc-h>中文开源技术社区</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://www.ithome.com/">
+        <div class="card-tit">it之家</div>
+        <div class=<desc-c><desc-l><desc-h>IT资讯频道</div>
+      </a>
+  </div>
+  
+  <div class="column">
+      <a href="https://www.mydrivers.com">
+        <div class="card-tit">快科技</div>
+        <div class=<desc-c><desc-l><desc-h>科技新闻资讯</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://www.kafan.cn/">
+        <div class="card-tit">卡饭</div>
+        <div class=<desc-c><desc-l><desc-h>计算机安全论坛</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://sspai.com/">
+        <div class="card-tit">少数派</div>
+        <div class=<desc-c><desc-l><desc-h>高效工作，品质生活</div>
+      </a>
+  </div>
+  
+  <div class="column">
+      <a href="https://www.douban.com">
+        <div class="card-tit">豆瓣</div>
+        <div class=<desc-c><desc-l><desc-h>影音，书籍，兴趣</div>
+      </a>
+  </div>
+
+</div>
+
+<div software id="software">
+  <div class="group">
+      <p>↓</p>
+  </div>
+</div>
+
+<div class="row">
+
+  <div class="column">
+      <a href="https://gitee.com">
+        <div class="card-tit">gitee</div>
+        <div class=<desc-c><desc-l><desc-h>开源代码托管平台</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://f-droid.org/zh_Hans/">
+        <div class="card-tit">F-Droid</div>
+        <div class=<desc-c><desc-l><desc-h>自由开源软件</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://github.com">
+        <div class="card-tit">github</div>
+        <div class=<desc-c><desc-l><desc-h>开源代码托管平台</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://github.com/plateaukao/einkbro">
+        <div class="card-tit">einkbro</div>
+        <div class=<desc-c><desc-l><desc-h>安卓浏览器</div>
+      </a>
+  </div>
+  
+  <div class="column">
+      <a href="https://github.com/MuntashirAkon/Metro">
+        <div class="card-tit">Metro</div>
+        <div class=<desc-c><desc-l><desc-h>安卓音乐播放器</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://github.com/VinylMusicPlayer/VinylMusicPlayer">
+        <div class="card-tit">VinylMusicPlayer</div>
+        <div class=<desc-c><desc-l><desc-h>安卓音乐播放器</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://github.com/zhanghai/MaterialFiles">
+        <div class="card-tit">MaterialFiles</div>
+        <div class=<desc-c><desc-l><desc-h>安卓文件管理器</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://github.com/Slion/Fulguris">
+        <div class="card-tit">Fulguris</div>
+        <div class=<desc-c><desc-l><desc-h>安卓浏览器</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://github.com/zhongyang219/MusicPlayer2">
+        <div class="card-tit">MusicPlayer2</div>
+        <div class=<desc-c><desc-l><desc-h>windows音乐播放器</div>
+      </a>
+  </div>
+  
+  <div class="column">
+      <a href="https://github.com/WangDaYeeeeee/GeometricWeather">
+        <div class="card-tit">GeometricWeather</div>
+        <div class=<desc-c><desc-l><desc-h>安卓天气程序</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://github.com/gedoor/legado">
+        <div class="card-tit">开源阅读</div>
+        <div class=<desc-c><desc-l><desc-h>安卓小说阅读程序</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://github.com/fcitx5-android/fcitx5-android">
+        <div class="card-tit">fcitx5-android</div>
+        <div class=<desc-c><desc-l><desc-h>安卓输入法</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://github.com/bromite/bromite/releases/">
+        <div class="card-tit">Bromite</div>
+        <div class=<desc-c><desc-l><desc-h>安卓浏览器</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://github.com/kiwibrowser/src.next/releases">
+        <div class="card-tit">kiwibrowser</div>
+        <div class=<desc-c><desc-l><desc-h>安卓浏览器</div>
+      </a>
+  </div>
+  
+  <div class="column">
+      <a href="https://github.com/Eloston/ungoogled-chromium">
+        <div class="card-tit">ungoogled.chromium</div>
+        <div class=<desc-c><desc-l><desc-h>浏览器</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://ungoogled-software.github.io/ungoogled-chromium-binaries/">
+        <div class="card-tit">ungoogled.chromium</div>
+        <div class=<desc-c><desc-l><desc-h>浏览器</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://chromium.woolyss.com/">
+        <div class="card-tit">chromium.woolyss</div>
+        <div class=<desc-c><desc-l><desc-h>浏览器</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://registry.npmmirror.com/binary.html">
+        <div class="card-tit">chromium-Mirror</div>
+        <div class=<desc-c><desc-l><desc-h>chromium淘宝镜像</div>
+      </a>
+  </div>
+
+</div>
+
+<div other id="other">
+  <div class="group">
+      <p>↓</p>
+  </div>
+</div>
+
+<div class="row">
+
+  <div class="column">
+      <a href="https://mail.163.com/">
+        <div class="card-tit">163邮箱</div>
+        <div class=<desc-c><desc-l><desc-h>网易邮箱</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://www.firefox.net.cn/">
+        <div class="card-tit">Firefox</div>
+        <div class=<desc-c><desc-l><desc-h>火狐论坛</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://pan.baidu.com/">
+        <div class="card-tit">百度网盘</div>
+        <div class=<desc-c><desc-l><desc-h>网络备份、共享</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://www.taobao.com">
+        <div class="card-tit">淘宝</div>
+        <div class=<desc-c><desc-l><desc-h>网络购物平台</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://www.tmall.com/">
+        <div class="card-tit">天猫</div>
+        <div class=<desc-c><desc-l><desc-h>网络购物平台</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://www.jd.com/">
+        <div class="card-tit">京东</div>
+        <div class=<desc-c><desc-l><desc-h>网络购物平台</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://v.qq.com">
+        <div class="card-tit">腾讯视频</div>
+        <div class=<desc-c><desc-l><desc-h>在线视频网站</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://www.iqiyi.com/">
+        <div class="card-tit">爱奇艺</div>
+        <div class=<desc-c><desc-l><desc-h>在线视频网站</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://youku.com">
+        <div class="card-tit">优酷</div>
+        <div class=<desc-c><desc-l><desc-h>在线视频网站</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://music.163.com">
+        <div class="card-tit">网易云音乐</div>
+        <div class=<desc-c><desc-l><desc-h>在线音乐网站</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://github.com/aiboboxx/v2rayfree/blob/main/README.md">
+        <div class="card-tit">v2rayfree</div>
+        <div class=<desc-c><desc-l><desc-h>v2rayfree节点订阅</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://car.m.autohome.com.cn/6926/duibi/encry-2pV3NHr1Pfw%3d">
+        <div class="card-tit">汽车之家</div>
+        <div class=<desc-c><desc-l><desc-h>车型对比</div>
+      </a>
+  </div>
+
+  <div class="column">
+      <a href="https://amifloced.org/">
+        <div class="card-tit">FLoCed testing</div>
+        <div class=<desc-c><desc-l><desc-h>FLoCed testing</div>
+      </a>
+  </div>
+
+</div>
+
+<div class="lines"></div>
+
+<div class="footer">
+  <p>本站内容源自互联网</p>
+  <p>如有内容侵犯了你的权益</p>
+  <p>请联系本站删除相关内容</p>
+  <p>Copyright © 2023-2030 All Rights Reserved</p>
+</div>
+
+</body>
+</html>
