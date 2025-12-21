@@ -72,6 +72,11 @@ html, body {
     --search-fixed-height: 160px;
     --total-fixed-height: calc(var(--top-space-height) + var(--search-fixed-height));
   }
+  
+  /* 添加移动端 sidenav 样式 */
+  #sidenav a {
+    transition: right 0.3s ease;
+  }
 }
 
 /* ========== 横屏模式覆盖样式 ========== */
@@ -88,12 +93,19 @@ html, body {
 .search-form {
   position: relative;
   width: 380px;
+  display: flex;
 }
+
+.search-input-group {
+  display: flex;
+  width: 100%;
+}
+
 .search-form .text {
   display: inline-block;
   border: 0;
   padding-left: 5px;
-  width: 300px;
+  width: 280px; /* 减小宽度给按钮留更多空间 */
   height: 35px;
   font-size: 14px;
   color: #000001;
@@ -101,11 +113,20 @@ html, body {
   border: 1px solid #cfcfcf;
   background-color: rgba(255, 255, 255, 0.4);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+  border-right: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }			
-.search-form .search-btn {		
-  width: 80px;
+
+/* 更新搜索按钮样式 */
+.search-btn-group {
+  display: flex;
   height: 35px;
-  right: 0px;
+}
+
+.search-btn {
+  width: 60px; /* 增加宽度显示文字 */
+  height: 35px;
   border: 1px solid #cfcfcf;
   outline: none;
   cursor: pointer;
@@ -114,7 +135,84 @@ html, body {
   background-color: rgba(33, 150, 243, 0.8);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
   color: #eeeeee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-left: none;
+  border-right: none;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.dropdown-btn {
+  width: 30px;
+  height: 35px;
+  border: 1px solid #cfcfcf;
+  border-left: none; /* 确保左边框为无 */
+  outline: none;
+  cursor: pointer;
+  text-align: center;
+  line-height: 35px;
+  background-color: rgba(33, 150, 243, 0.8);
+  color: #eeeeee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  font-size: 12px;
+  /* 只给右侧和下侧添加阴影 */
+  box-shadow: 2px 4px 8px 0 rgba(0, 0, 0, 0.4);
+  margin-left: -1px; /* 轻微重叠以消除间隙 */
+}
+
+.dropdown-btn::after {
+  content: "▾";
+  color: white;
+}
+
+/* 下拉菜单样式 */
+.search-dropdown {
   position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid #cfcfcf;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: none;
+  z-index: 1002;
+  min-width: 120px;
+}
+
+.search-dropdown.show {
+  display: block;
+}
+
+.search-dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px; /* 增加内边距 */
+  cursor: pointer;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.search-dropdown-item:hover {
+  background-color: #f5f5f5;
+}
+
+.search-dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.search-dropdown-item span {
+  font-size: 14px;
 }
 
 /* ========== 右侧导航栏 ========== */
@@ -284,10 +382,14 @@ body {
     width: 250px;
   }
   .search-form .text {
-    width: 250px;
-  }			
-  .search-form .search-btn {		
-    width: 60px;
+    width: 170px; /* 移动端调整输入框宽度 */
+  }
+  .search-btn {
+    width: 50px; /* 移动端按钮宽度 */
+    font-size: 12px;
+  }
+  .dropdown-btn {
+    width: 25px; /* 移动端下拉按钮宽度 */
   }
   #sidenav a {
     right: -35px;
@@ -364,6 +466,165 @@ function myFunction() {
    var element = document.body;
    element.classList.toggle("bgimg");
 }
+
+// 搜索引擎管理
+let currentEngine = 'bing';
+
+// 搜索引擎配置 - 现在只存储名称和URL
+const searchEngines = {
+  bing: {
+    name: '必应',
+    url: 'https://cn.bing.com/search?q=',
+    displayName: '必应'
+  },
+  google: {
+    name: '谷歌',
+    url: 'https://www.google.com/search?q=',
+    displayName: '谷歌'
+  },
+  yandex: {
+    name: 'Yandex',
+    url: 'https://yandex.com/search/?text=',
+    displayName: 'Yandex'
+  }
+};
+
+// 切换下拉菜单显示/隐藏
+function toggleDropdown() {
+  const dropdown = document.getElementById('searchDropdown');
+  dropdown.classList.toggle('show');
+}
+
+// 切换搜索引擎
+function switchEngine(engine) {
+  currentEngine = engine;
+  const engineConfig = searchEngines[engine];
+  
+  // 更新搜索按钮文字
+  const searchBtn = document.querySelector('.search-btn');
+  searchBtn.textContent = engineConfig.displayName;
+  
+  // 更新表单action
+  const searchForm = document.querySelector('.search-form');
+  searchForm.action = engineConfig.url;
+  
+  // 关闭下拉菜单
+  const dropdown = document.getElementById('searchDropdown');
+  dropdown.classList.remove('show');
+  
+  // 获取搜索关键词并直接执行搜索
+  const searchInput = document.querySelector('.search-form .text');
+  const query = searchInput.value.trim();
+  
+  if (query) {
+    // 直接跳转到搜索结果
+    window.open(engineConfig.url + encodeURIComponent(query), '_self');
+  }
+}
+
+// 点击其他地方关闭下拉菜单
+document.addEventListener('click', function(event) {
+  const dropdown = document.getElementById('searchDropdown');
+  const dropdownBtn = document.querySelector('.dropdown-btn');
+  const searchBtn = document.querySelector('.search-btn');
+  
+  if (dropdown && dropdownBtn && searchBtn) {
+    if (!dropdown.contains(event.target) && 
+        !dropdownBtn.contains(event.target) && 
+        !searchBtn.contains(event.target)) {
+      dropdown.classList.remove('show');
+    }
+  }
+});
+
+// 表单提交处理
+function handleSearchSubmit(event) {
+  event.preventDefault();
+  
+  const searchInput = document.querySelector('.search-form .text');
+  const query = searchInput.value.trim();
+  const engineConfig = searchEngines[currentEngine];
+  
+  if (query) {
+    window.open(engineConfig.url + encodeURIComponent(query), '_self');
+  }
+  
+  return false;
+}
+
+// 移动端自动收回 sidenav 功能
+document.addEventListener('DOMContentLoaded', function() {
+  // 获取所有 sidenav 按钮
+  const sidenavButtons = document.querySelectorAll('#sidenav a');
+  
+  // 检查是否在移动端
+  function isMobileDevice() {
+    return window.innerWidth <= 768;
+  }
+  
+  // 处理 sidenav 点击事件 - 使用事件委托
+  document.addEventListener('click', function(e) {
+    // 检查点击的是否是 sidenav 按钮
+    const clickedButton = e.target.closest('#sidenav a');
+    if (!clickedButton) return;
+    
+    // 检查是否是壁纸切换按钮
+    if (clickedButton.id === 'sidenava') {
+      // 执行壁纸切换功能
+      myFunction();
+    }
+    
+    // 只在移动端执行自动收回
+    if (isMobileDevice()) {
+      // 先显示按钮
+      clickedButton.style.right = '0';
+      
+      // 2秒后自动收回
+      setTimeout(() => {
+        // 检查按钮是否仍然处于显示状态
+        if (clickedButton.style.right === '0px') {
+          clickedButton.style.right = '-35px';
+        }
+      }, 500);
+    }
+  });
+  
+  // 为桌面端保持 hover 效果
+  if (!isMobileDevice()) {
+    sidenavButtons.forEach(button => {
+      button.addEventListener('mouseenter', function() {
+        this.style.right = '0';
+      });
+      
+      button.addEventListener('mouseleave', function() {
+        this.style.right = '-38px';
+      });
+    });
+  }
+  
+  // 监听窗口大小变化，在切换到桌面端时重置样式
+  window.addEventListener('resize', function() {
+    if (!isMobileDevice()) {
+      // 在桌面端，重置所有按钮位置并重新启用 hover 效果
+      sidenavButtons.forEach(button => {
+        button.style.right = '-38px';
+        button.style.transition = '0.3s';
+      });
+    } else {
+      // 在移动端，设置过渡效果
+      sidenavButtons.forEach(button => {
+        button.style.transition = 'right 0.3s ease';
+      });
+    }
+  });
+  
+  // 初始化：根据当前设备设置正确的样式
+  if (isMobileDevice()) {
+    sidenavButtons.forEach(button => {
+      button.style.transition = 'right 0.3s ease';
+    });
+  }
+});
 </script>
 
   <!-- 第一区域：顶部空白区域 -->
@@ -371,9 +632,25 @@ function myFunction() {
 
   <!-- 第二区域：固定搜索框 -->
   <div class="search-fixed">
-    <form class="search-form" target="_self" method="get" action="https://cn.bing.com/search?q=">
-      <input type="text" autocomplete="off" placeholder="好好学习，天天向上" name="q" class="text" />
-      <input type="submit" value="搜索" class="search-btn">
+    <form class="search-form" onsubmit="return handleSearchSubmit(event)">
+      <div class="search-input-group">
+        <input type="text" autocomplete="off" placeholder="好好学习，天天向上" name="q" class="text" />
+        <div class="search-btn-group">
+          <button type="submit" class="search-btn">必应</button>
+          <button type="button" class="dropdown-btn" onclick="toggleDropdown()"></button>
+        </div>
+      </div>
+      
+      <!-- 搜索引擎下拉菜单 -->
+      <!-- 只显示Google和Yandex，因为当前按钮已经是必应 -->
+      <div id="searchDropdown" class="search-dropdown">
+        <div class="search-dropdown-item" onclick="switchEngine('google')">
+          <span>谷歌</span>
+        </div>
+        <div class="search-dropdown-item" onclick="switchEngine('yandex')">
+          <span>Yandex</span>
+        </div>
+      </div>
     </form>
   </div>
 
@@ -382,8 +659,9 @@ function myFunction() {
     <a href="#popular" id="sidenavd">顶部</a>
     <a href="#software" id="sidenavc">软件</a>
     <a href="#other" id="sidenavb">其他</a>
-    <a onclick="myFunction()" id="sidenava">壁纸</a>
-  </div>  
+    <!-- 移除onclick属性，现在通过事件委托处理 -->
+    <a id="sidenava">壁纸</a>
+  </div> 
 
   <!-- 第三区域：可滚动内容 -->
   <div class="content-scrollable">
