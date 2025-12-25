@@ -25,7 +25,7 @@ html, body {
 
 /* ========== 桌面端默认配置 ========== */
 :root {
-  --top-space-height: 20px;   /* 修改这个值调整搜索框位置 */
+  --top-space-height: 30px;   /* 修改这个值调整搜索框位置 */
   --search-fixed-height: 260px;
   --total-fixed-height: calc(var(--top-space-height) + var(--search-fixed-height));
 }
@@ -89,11 +89,13 @@ html, body {
   }
 }
 
-/* ========== 搜索框样式 ========== */
+/* ========== 搜索框新样式 ========== */
 .search-form {
   position: relative;
   width: 380px;
   display: flex;
+  flex-direction: column; /* 改为垂直布局 */
+  align-items: center; /* 居中显示 */
 }
 
 .search-input-group {
@@ -104,116 +106,81 @@ html, body {
 .search-form .text {
   display: inline-block;
   border: 0;
-  padding-left: 5px;
-  width: 280px; /* 减小宽度给按钮留更多空间 */
-  height: 35px;
-  font-size: 14px;
+  padding-left: 15px;
+  width: 100%; /* 占满整个宽度 */
+  height: 40px;
+  font-size: 16px;
   color: #000001;
   outline: none;				
   border: 1px solid #cfcfcf;
-  background-color: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
-  border-right: none;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+  background-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  text-align: left;
 }			
 
-/* 更新搜索按钮样式 */
+/* 新的搜索按钮容器 - 在搜索框下方 */
 .search-btn-group {
   display: flex;
-  height: 35px;
+  justify-content: right; /* 居中显示 */
+  margin-top: 10px; /* 与搜索框的间距 */
+  width: 100%;
+  gap: 10px; /* 按钮之间的间距 */
 }
 
+/* 新的搜索按钮样式 - 文字链接效果 */
 .search-btn {
-  width: 60px; /* 增加宽度显示文字 */
-  height: 35px;
-  border: 1px solid #cfcfcf;
+  background: none;
+  border: none;
   outline: none;
   cursor: pointer;
-  text-align: center;
-  line-height: 35px;
-  background-color: rgba(33, 150, 243, 0.8);
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
-  color: #eeeeee;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  border-left: none;
-  border-right: none;
+  color: white;
   font-size: 14px;
   font-weight: bold;
-}
-
-.dropdown-btn {
-  width: 30px;
-  height: 35px;
-  border: 1px solid #cfcfcf;
-  border-left: none; /* 确保左边框为无 */
-  outline: none;
-  cursor: pointer;
-  text-align: center;
-  line-height: 35px;
-  background-color: rgba(33, 150, 243, 0.8);
-  color: #eeeeee;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* 添加文字阴影 */
   padding: 0;
-  border-top-right-radius: 2px;
-  border-bottom-right-radius: 2px;
-  font-size: 12px;
-  /* 只给右侧和下侧添加阴影 */
-  box-shadow: 2px 4px 8px 0 rgba(0, 0, 0, 0.4);
-  margin-left: -1px; /* 轻微重叠以消除间隙 */
+  padding-bottom: 5px; /* 为下划线预留空间 */
+  position: relative;
+  transition: all 0.3s ease;
 }
 
-.dropdown-btn::after {
-  content: "▼";
-  color: white;
+/* 鼠标悬停效果 - 白色下划线带阴影 */
+.search-btn:hover {
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
 }
 
-/* 下拉菜单样式 */
-.search-dropdown {
+/* 创建带阴影的白线效果 */
+.search-btn:hover::after {
+  content: '';
   position: absolute;
-  top: 100%;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  border: 1px solid #777777;
-  border-radius: 4px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    width: 0;
+    left: 50%;
+  }
+  to {
+    width: 100%;
+    left: 0;
+  }
+}
+
+/* 移除旧的搜索按钮和下拉按钮 */
+.dropdown-btn {
   display: none;
-  z-index: 1002;
-  min-width: 120px;
 }
 
-.search-dropdown.show {
-  display: block;
-}
-
-.search-dropdown-item {
-  display: flex;
-  align-items: center;
-  padding: 10px 15px; /* 增加内边距 */
-  cursor: pointer;
-  color: #333;
-  border-bottom: 1px solid #555555;
-  transition: background-color 0.2s;
-  font-size: 14px;
-  font-weight: normal;
-  color: #f1f1f1;
-}
-
-.search-dropdown-item:hover {
-  background-color: rgba(0, 0, 0, 0.3);
-}
-
-.search-dropdown-item:last-child {
-  border-bottom: none;
-}
-
-.search-dropdown-item span {
-  font-size: 14px;
+/* 移除下拉菜单样式 */
+.search-dropdown {
+  display: none;
 }
 
 /* ========== 右侧导航栏 ========== */
@@ -380,18 +347,22 @@ body {
   }
   
   .search-form {
-    width: 250px;
+    width: 40%;
   }
+  
   .search-form .text {
-    width: 170px; /* 移动端调整输入框宽度 */
+    font-size: 14px;
+    height: 36px;
   }
+  
+  .search-btn-group {
+    gap: 15px; /* 移动端减少间距 */
+  }
+  
   .search-btn {
-    width: 50px; /* 移动端按钮宽度 */
-    font-size: 12px;
+    font-size: 14px;
   }
-  .dropdown-btn {
-    width: 25px; /* 移动端下拉按钮宽度 */
-  }
+  
   #sidenav a {
     right: -35px;
     width: 70px;
@@ -471,7 +442,7 @@ function myFunction() {
 // 搜索引擎管理
 let currentEngine = 'bing';
 
-// 搜索引擎配置 - 现在只存储名称和URL
+// 搜索引擎配置
 const searchEngines = {
   bing: {
     name: '必应',
@@ -490,66 +461,25 @@ const searchEngines = {
   }
 };
 
-// 切换下拉菜单显示/隐藏
-function toggleDropdown() {
-  const dropdown = document.getElementById('searchDropdown');
-  dropdown.classList.toggle('show');
-}
-
-// 切换搜索引擎
-function switchEngine(engine) {
-  currentEngine = engine;
-  const engineConfig = searchEngines[engine];
-  
-  // 更新搜索按钮文字
-  const searchBtn = document.querySelector('.search-btn');
-  searchBtn.textContent = engineConfig.displayName;
-  
-  // 更新表单action
-  const searchForm = document.querySelector('.search-form');
-  searchForm.action = engineConfig.url;
-  
-  // 关闭下拉菜单
-  const dropdown = document.getElementById('searchDropdown');
-  dropdown.classList.remove('show');
-  
-  // 获取搜索关键词并直接执行搜索
+// 执行搜索
+function performSearch(engine) {
   const searchInput = document.querySelector('.search-form .text');
   const query = searchInput.value.trim();
+  const engineConfig = searchEngines[engine];
   
   if (query) {
     // 直接跳转到搜索结果
     window.open(engineConfig.url + encodeURIComponent(query), '_self');
+  } else {
+    // 如果没有输入关键词，只切换到对应搜索引擎
+    currentEngine = engine;
   }
 }
 
-// 点击其他地方关闭下拉菜单
-document.addEventListener('click', function(event) {
-  const dropdown = document.getElementById('searchDropdown');
-  const dropdownBtn = document.querySelector('.dropdown-btn');
-  const searchBtn = document.querySelector('.search-btn');
-  
-  if (dropdown && dropdownBtn && searchBtn) {
-    if (!dropdown.contains(event.target) && 
-        !dropdownBtn.contains(event.target) && 
-        !searchBtn.contains(event.target)) {
-      dropdown.classList.remove('show');
-    }
-  }
-});
-
-// 表单提交处理
+// 表单提交处理 - 使用当前选中的引擎
 function handleSearchSubmit(event) {
   event.preventDefault();
-  
-  const searchInput = document.querySelector('.search-form .text');
-  const query = searchInput.value.trim();
-  const engineConfig = searchEngines[currentEngine];
-  
-  if (query) {
-    window.open(engineConfig.url + encodeURIComponent(query), '_self');
-  }
-  
+  performSearch(currentEngine);
   return false;
 }
 
@@ -636,21 +566,13 @@ document.addEventListener('DOMContentLoaded', function() {
     <form class="search-form" onsubmit="return handleSearchSubmit(event)">
       <div class="search-input-group">
         <input type="text" autocomplete="off" placeholder="好好学习，天天向上" name="q" class="text" />
-        <div class="search-btn-group">
-          <button type="submit" class="search-btn">必应</button>
-          <button type="button" class="dropdown-btn" onclick="toggleDropdown()"></button>
-        </div>
       </div>
       
-      <!-- 搜索引擎下拉菜单 -->
-      <!-- 只显示Google和Yandex，因为当前按钮已经是必应 -->
-      <div id="searchDropdown" class="search-dropdown">
-        <div class="search-dropdown-item" onclick="switchEngine('google')">
-          <span>谷歌</span>
-        </div>
-        <div class="search-dropdown-item" onclick="switchEngine('yandex')">
-          <span>Yandex</span>
-        </div>
+      <!-- 新的搜索按钮组 -->
+      <div class="search-btn-group">
+        <button type="submit" class="search-btn" onclick="performSearch('bing')">必应</button>
+        <button type="button" class="search-btn" onclick="performSearch('google')">谷歌</button>
+        <button type="button" class="search-btn" onclick="performSearch('yandex')">Yandex</button>
       </div>
     </form>
   </div>
@@ -873,7 +795,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="card-tit">chromium-Mirror</div>
             <div class=<desc-c><desc-l><desc-h>chromium淘宝镜像</div>
           </a>
-      </div>
+      </div> 
 
     </div>
 
@@ -991,4 +913,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
-
