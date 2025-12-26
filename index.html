@@ -114,8 +114,8 @@ html, body {
   outline: none;				
   border: 1px solid #aaaaaa;
   background-color: rgba(0, 0, 0, 0.2);
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  border-radius: 0px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
   text-align: left;
 }			
 
@@ -137,7 +137,7 @@ html, body {
   color: #f1f1f1;
   font-size: 14px;
   font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* 添加文字阴影 */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* 添加文字阴影 */
   padding: 0;
   padding-bottom: 5px; /* 为下划线预留空间 */
   position: relative;
@@ -347,13 +347,17 @@ body {
   }
   
   .search-form {
-    width: 60%;
+    width: 70%;
   }
   
   .search-form .text {
     padding-left: 5px;
     font-size: 14px;
     height: 36px;
+    border: 0px solid #999999;
+    background-color: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+    border-radius: 0px;
   }
   
   .search-btn-group {
@@ -409,6 +413,9 @@ body {
 @media screen and (orientation: landscape) and (max-width: 768px) {
   .row {
     width: 70%;
+  }
+  .search-form {
+    width: 40%;
   }
   #sidenava {
     bottom: 10px;
