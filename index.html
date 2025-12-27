@@ -110,7 +110,7 @@ html, body {
   width: 100%; /* 占满整个宽度 */
   height: 40px;
   font-size: 16px;
-  color: #f9f9f9;
+  color: #eeeeee;
   outline: none;				
   border: 1px solid #aaaaaa;
   background-color: rgba(0, 0, 0, 0.2);
@@ -118,6 +118,11 @@ html, body {
   border-radius: 20px;
   text-align: left;
 }			
+
+.search-form .text::placeholder {
+  color: #aaaaaa;  /* 这是占位符文字的颜色 */
+  opacity: 1;      /* 确保不透明 */
+}
 
 /* 新的搜索按钮容器 - 在搜索框下方 */
 .search-btn-group {
@@ -137,7 +142,7 @@ html, body {
   color: #f1f1f1;
   font-size: 14px;
   font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* 添加文字阴影 */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 1); /* 添加文字阴影 */
   padding: 0;
   padding-bottom: 5px; /* 为下划线预留空间 */
   position: relative;
@@ -353,12 +358,18 @@ body {
   .search-form .text {
     padding-left: 5px;
     font-size: 14px;
+    color: #f9f9f9;
     height: 36px;
-    border: 0px solid #999999;
+    border: 1px solid #aaaaaa;
     background-color: rgba(0, 0, 0, 0.2);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
-    border-radius: 0px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
   }
+  
+  .search-form .text::placeholder {
+    color: #bbbbbb;  /* 这是占位符文字的颜色 */
+    opacity: 1;      /* 确保不透明 */
+}
   
   .search-btn-group {
     margin-top: 5px; /* 与搜索框的间距 */
@@ -366,7 +377,8 @@ body {
   }
   
   .search-btn {
-    font-size: 14px;
+    font-size: 12px;
+    font-weight: normal;
   }
   
   #sidenav a {
