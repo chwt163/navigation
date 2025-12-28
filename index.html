@@ -53,7 +53,7 @@ html, body {
   z-index: 1000;
 }
 
-/* 第三区域：可滚动内容区域 */
+/* 第三区域：可滚动内容区域 - 添加渐隐效果 */
 .content-scrollable {
   position: fixed;
   top: var(--total-fixed-height);
@@ -62,10 +62,25 @@ html, body {
   height: calc(100vh - var(--total-fixed-height));
   overflow-y: auto;
   z-index: 998;
+  
+  /* 添加渐变遮罩 - 顶部和底部渐隐效果 */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) 30px,
+    rgba(0, 0, 0, 1) calc(100% - 30px),
+    rgba(0, 0, 0, 0) 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) 30px,
+    rgba(0, 0, 0, 1) calc(100% - 30px),
+    rgba(0, 0, 0, 0) 100%
+  );
 }
 
 /* ========== 移动端覆盖样式 ========== */
-/* 注意：这里使用 max-width，只有屏幕宽度 ≤ 768px 时生效 */
 @media (max-width: 768px) {
   :root {
     --top-space-height: 160px;
@@ -73,19 +88,51 @@ html, body {
     --total-fixed-height: calc(var(--top-space-height) + var(--search-fixed-height));
   }
   
-  /* 添加移动端 sidenav 样式 */
+  .content-scrollable {
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 1) 15px,
+      rgba(0, 0, 0, 1) calc(100% - 15px),
+      rgba(0, 0, 0, 0) 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 1) 15px,
+      rgba(0, 0, 0, 1) calc(100% - 15px),
+      rgba(0, 0, 0, 0) 100%
+    );
+  }
+  
   #sidenav a {
     transition: right 0.3s ease;
   }
 }
 
 /* ========== 横屏模式覆盖样式 ========== */
-/* 注意：这里同时要求横屏且宽度 ≤ 768px，避免影响桌面端 */
 @media screen and (orientation: landscape) and (max-width: 768px) {
   :root {
     --top-space-height: 20px;
     --search-fixed-height: 80px;
     --total-fixed-height: calc(var(--top-space-height) + var(--search-fixed-height));
+  }
+  
+  .content-scrollable {
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 1) 10px,
+      rgba(0, 0, 0, 1) calc(100% - 10px),
+      rgba(0, 0, 0, 0) 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 1) 10px,
+      rgba(0, 0, 0, 1) calc(100% - 10px),
+      rgba(0, 0, 0, 0) 100%
+    );
   }
 }
 
@@ -94,8 +141,8 @@ html, body {
   position: relative;
   width: 380px;
   display: flex;
-  flex-direction: column; /* 改为垂直布局 */
-  align-items: center; /* 居中显示 */
+  flex-direction: column;
+  align-items: center;
 }
 
 .search-input-group {
@@ -107,7 +154,7 @@ html, body {
   display: inline-block;
   border: 0;
   padding-left: 15px;
-  width: 100%; /* 占满整个宽度 */
+  width: 100%;
   height: 40px;
   font-size: 16px;
   color: #eeeeee;
@@ -120,20 +167,18 @@ html, body {
 }			
 
 .search-form .text::placeholder {
-  color: #aaaaaa;  /* 这是占位符文字的颜色 */
-  opacity: 1;      /* 确保不透明 */
+  color: #aaaaaa;
+  opacity: 1;
 }
 
-/* 新的搜索按钮容器 - 在搜索框下方 */
 .search-btn-group {
   display: flex;
-  justify-content: right; /* 居中显示 */
-  margin-top: 10px; /* 与搜索框的间距 */
+  justify-content: right;
+  margin-top: 10px;
   width: 100%;
-  gap: 10px; /* 按钮之间的间距 */
+  gap: 10px;
 }
 
-/* 新的搜索按钮样式 - 文字链接效果 */
 .search-btn {
   background: none;
   border: none;
@@ -142,19 +187,17 @@ html, body {
   color: #f1f1f1;
   font-size: 14px;
   font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 1); /* 添加文字阴影 */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
   padding: 0;
-  padding-bottom: 5px; /* 为下划线预留空间 */
+  padding-bottom: 5px;
   position: relative;
   transition: all 0.3s ease;
 }
 
-/* 鼠标悬停效果 - 白色下划线带阴影 */
 .search-btn:hover {
   text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
 }
 
-/* 创建带阴影的白线效果 */
 .search-btn:hover::after {
   content: '';
   position: absolute;
@@ -178,13 +221,7 @@ html, body {
   }
 }
 
-/* 移除旧的搜索按钮和下拉按钮 */
-.dropdown-btn {
-  display: none;
-}
-
-/* 移除下拉菜单样式 */
-.search-dropdown {
+.dropdown-btn, .search-dropdown {
   display: none;
 }
 
@@ -320,22 +357,16 @@ desc-c{
 
 /* ========== 背景图片 ========== */
 body {
-  background: url('img/bg1005a.jpg');
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
-.bgimg {
-  background: url('https://api.dujin.org/bing/1920.php');
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-image: url('img/bg1005a.jpg');
 }
 
 /* ========== 响应式设计 ========== */
 @media (max-width: 768px) {
+  /* 移动端默认显示必应壁纸 */
   body {
     background: url('https://api.dujin.org/bing/m.php');
     background-attachment: fixed;
@@ -343,12 +374,15 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
   }
-  .bgimg {
-  background: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/4QByRXhpZgAATU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAAExAAIAAAAQAAAAWgAAAAAAAABgAAAAAQAAAGAAAAABcGFpbnQubmV0IDQuMy4zAP/bAEMAAgEBAgEBAgICAgICAgIDBQMDAwMDBgQEAwUHBgcHBwYHBwgJCwkICAoIBwcKDQoKCwwMDAwHCQ4PDQwOCwwMDP/bAEMBAgICAwMDBgMDBgwIBwgMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDP/AABEIABUAFQMBIgACEQEDEQH/xAAfAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgv/xAC1EAACAQMDAgQDBQUEBAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+fr/xAAfAQADAQEBAQEBAQEBAAAAAAAAAQIDBAUGBwgJCgv/xAC1EQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/APbHktLnRCu61jXyhtUsreWSp6e4P9apAxiSNZCPLaUMwJAySRyfzH4U0Sstv5wjYfLuAVGCjr0rRubovCn+sG51A/ctlhkdPlyc5x/k0AWohp6ptxZBAcoBs6f5FFQ3EmG/1dx6/wCqb0H+zRQA0oy6MpVmX/R8rycrwMc5qaU4aHjO6WPP/fQoooA2rZjlvwooooA//9k=');
-    background-repeat:repeat;
-    background-attachment:fixed;
-    overflow-x: hidden;
-    overflow-y: auto;
+  
+  /* Base64图片的特殊样式 - 平铺显示 */
+  body.base64-bg {
+    background-repeat: repeat !important;
+    background-attachment: fixed !important;
+    background-size: auto !important;  /* 改为auto，不平铺拉伸 */
+    background-position: 0 0 !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
   }
   
   .search-form {
@@ -367,13 +401,13 @@ body {
   }
   
   .search-form .text::placeholder {
-    color: #bbbbbb;  /* 这是占位符文字的颜色 */
-    opacity: 1;      /* 确保不透明 */
-}
+    color: #bbbbbb;
+    opacity: 1;
+  }
   
   .search-btn-group {
-    margin-top: 5px; /* 与搜索框的间距 */
-    gap: 5px; /* 移动端减少间距 */
+    margin-top: 5px;
+    gap: 5px;
   }
   
   .search-btn {
@@ -447,6 +481,14 @@ body {
   .footer {
     width: 70%;
   }
+  
+  /* 横屏模式下的Base64图片样式 */
+  body.base64-bg {
+    background-repeat: repeat !important;
+    background-attachment: fixed !important;
+    background-size: auto !important;
+    background-position: 0 0 !important;
+  }
 }
 </style>
 </head>
@@ -454,16 +496,58 @@ body {
 <body>
 
 <script>
-// 图片切换函数
-function myFunction() {
-   var element = document.body;
-   element.classList.toggle("bgimg");
+// ============================================
+// 图片配置
+// ============================================
+
+// 本地图片数组
+/*
+const localBackgroundImages = [
+  'img/bg1.jpg',
+  'img/bg2.jpg', 
+  'img/bg3.jpg',
+  'img/bg4.jpg',
+  'img/bg5.jpg',
+  'img/bg6.jpg',
+  'img/bg7.jpg',
+  'img/bg8.jpg',
+  'img/bg9.jpg',
+  'img/bg10.jpg'
+];
+*/
+
+
+// 如果图片有规律的命名（比如 bg1.jpg, bg2.jpg...），可以使用循环自动生成
+// 取消下面的注释，并修改 totalImages 为你的实际图片数量：
+
+const totalImages = 20; // 你的图片总数
+const localBackgroundImages = [];
+for (let i = 1; i <= totalImages; i++) {
+  localBackgroundImages.push(`img/bg${i}.jpg`);
 }
+
+
+// Base64图片
+const base64Image = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/4QByRXhpZgAATU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAAExAAIAAAAQAAAAWgAAAAAAAABgAAAAAQAAAGAAAAABcGFpbnQubmV0IDQuMy4zAP/bAEMAAgEBAgEBAgICAgICAgIDBQMDAwMDBgQEAwUHBgcHBwYHBwgJCwkICAoIBwcKDQoKCwwMDAwHCQ4PDQwOCwwMDP/bAEMBAgICAwMDBgMDBgwIBwgMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDP/AABEIABUAFQMBIgACEQEDEQH/xAAfAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgv/xAC1EAACAQMDAgQDBQUEBAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+fr/xAAfAQADAQEBAQEBAQEBAAAAAAAAAQIDBAUGBwgJCgv/xAC1EQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/APbHktLnRCu61jXyhtUsreWSp6e4P9apAxiSNZCPLaUMwJAySRyfzH4U0Sstv5wjYfLuAVGCjr0rRubovCn+sG51A/ctlhkdPlyc5x/k0AWohp6ptxZBAcoBs6f5FFQ3EmG/1dx6/wCqb0H+zRQA0oy6MpVmX/R8rycrwMc5qaU4aHjO6WPP/fQoooA2rZjlvwooooA//9k=';
+
+// 必应壁纸URL
+const bingWallpaperUrls = {
+  desktop: 'https://api.dujin.org/bing/1920.php',  // 桌面端必应壁纸
+  mobile: 'https://api.dujin.org/bing/m.php'      // 移动端必应壁纸
+};
+
+// 检测是否为移动端
+function isMobileDevice() {
+  return window.innerWidth <= 768;
+}
+
+// ============================================
+// 功能函数部分
+// ============================================
 
 // 搜索引擎管理
 let currentEngine = 'bing';
 
-// 搜索引擎配置
 const searchEngines = {
   bing: {
     name: '必应',
@@ -489,51 +573,153 @@ function performSearch(engine) {
   const engineConfig = searchEngines[engine];
   
   if (query) {
-    // 直接跳转到搜索结果
     window.open(engineConfig.url + encodeURIComponent(query), '_self');
   } else {
-    // 如果没有输入关键词，只切换到对应搜索引擎
     currentEngine = engine;
   }
 }
 
-// 表单提交处理 - 使用当前选中的引擎
+// 表单提交处理
 function handleSearchSubmit(event) {
   event.preventDefault();
   performSearch(currentEngine);
   return false;
 }
 
-// 移动端自动收回 sidenav 功能
-document.addEventListener('DOMContentLoaded', function() {
-  // 获取所有 sidenav 按钮
-  const sidenavButtons = document.querySelectorAll('#sidenav a');
-  
-  // 检查是否在移动端
-  function isMobileDevice() {
-    return window.innerWidth <= 768;
+// 设置随机本地背景图片（桌面端默认）
+function setRandomLocalBackground() {
+  if (localBackgroundImages.length === 0) {
+    console.log('没有找到本地背景图片');
+    document.body.style.backgroundImage = `url('img/bg1005a.jpg')`;
+    document.body.classList.remove('base64-bg'); // 移除base64样式
+    return false;
   }
   
-  // 处理 sidenav 点击事件 - 使用事件委托
+  const randomIndex = Math.floor(Math.random() * localBackgroundImages.length);
+  const randomImage = localBackgroundImages[randomIndex];
+  
+  // 重置背景样式为默认
+  document.body.style.backgroundImage = `url('${randomImage}')`;
+  document.body.style.backgroundRepeat = 'no-repeat';
+  document.body.style.backgroundSize = 'cover';
+  document.body.style.backgroundPosition = 'center';
+  document.body.classList.remove('base64-bg'); // 移除base64样式类
+  
+  console.log(`桌面端：使用随机本地图片: ${randomImage}`);
+  return true;
+}
+
+// 设置桌面端必应壁纸
+function setDesktopBingWallpaper() {
+  // 重置背景样式为默认
+  document.body.style.backgroundImage = `url('${bingWallpaperUrls.desktop}')`;
+  document.body.style.backgroundRepeat = 'no-repeat';
+  document.body.style.backgroundSize = 'cover';
+  document.body.style.backgroundPosition = 'center';
+  document.body.classList.remove('base64-bg'); // 移除base64样式类
+  
+  console.log(`桌面端：切换到必应壁纸: ${bingWallpaperUrls.desktop}`);
+}
+
+// 设置移动端必应壁纸（移动端默认）
+function setMobileBingWallpaper() {
+  // 重置背景样式为默认
+  document.body.style.backgroundImage = `url('${bingWallpaperUrls.mobile}')`;
+  document.body.style.backgroundRepeat = 'no-repeat';
+  document.body.style.backgroundSize = 'cover';
+  document.body.style.backgroundPosition = 'center';
+  document.body.classList.remove('base64-bg'); // 移除base64样式类
+  
+  console.log('移动端：使用必应壁纸');
+}
+
+// 设置Base64图片（移动端点击按钮时使用）
+function setBase64Wallpaper() {
+  // 设置Base64图片并应用平铺样式
+  document.body.style.backgroundImage = `url('${base64Image}')`;
+  document.body.style.backgroundRepeat = 'repeat';    // 平铺
+  document.body.style.backgroundSize = 'auto';        // 不拉伸
+  document.body.style.backgroundPosition = '0 0';     // 从左上角开始
+  document.body.classList.add('base64-bg');           // 添加base64样式类
+  
+  console.log('切换到Base64图片（平铺显示）');
+}
+
+// 重置背景样式为默认（用于从Base64切换回其他壁纸）
+function resetBackgroundStyle() {
+  document.body.style.backgroundRepeat = 'no-repeat';
+  document.body.style.backgroundSize = 'cover';
+  document.body.style.backgroundPosition = 'center';
+}
+
+// 壁纸切换函数（点击壁纸按钮时调用）
+function toggleWallpaper() {
+  const isBase64 = document.body.classList.contains('base64-bg');
+  const isMobile = isMobileDevice();
+  
+  console.log(`切换壁纸 - 移动端: ${isMobile}, Base64: ${isBase64}`);
+  
+  if (isMobile) {
+    // 移动端逻辑：必应壁纸 ↔ Base64图片
+    if (isBase64) {
+      // 当前是base64图片，切换回必应壁纸
+      setMobileBingWallpaper();
+    } else {
+      // 当前是必应壁纸，切换到base64图片（平铺）
+      setBase64Wallpaper();
+    }
+  } else {
+    // 桌面端逻辑：本地图片 ↔ 必应壁纸
+    const currentBg = document.body.style.backgroundImage;
+    const isBingWallpaper = currentBg.includes('dujin.org') || currentBg.includes('bing');
+    
+    if (isBase64) {
+      // 当前是base64图片，切换回随机本地图片
+      setRandomLocalBackground();
+    } else if (isBingWallpaper) {
+      // 当前是必应壁纸，切换回随机本地图片
+      setRandomLocalBackground();
+    } else {
+      // 当前是本地图片，切换到必应壁纸
+      setDesktopBingWallpaper();
+    }
+  }
+}
+
+// 初始化背景
+function initBackground() {
+  if (isMobileDevice()) {
+    // 移动端：使用必应壁纸
+    setMobileBingWallpaper();
+  } else {
+    // 桌面端：随机本地图片
+    setRandomLocalBackground();
+  }
+}
+
+// ============================================
+// 页面加载和事件处理
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+  // 1. 初始化背景
+  initBackground();
+  
+  // 2. 获取所有 sidenav 按钮
+  const sidenavButtons = document.querySelectorAll('#sidenav a');
+  
+  // 3. 处理 sidenav 点击事件
   document.addEventListener('click', function(e) {
-    // 检查点击的是否是 sidenav 按钮
     const clickedButton = e.target.closest('#sidenav a');
     if (!clickedButton) return;
     
-    // 检查是否是壁纸切换按钮
     if (clickedButton.id === 'sidenava') {
-      // 执行壁纸切换功能
-      myFunction();
+      toggleWallpaper();
     }
     
-    // 只在移动端执行自动收回
+    // 移动端自动收回
     if (isMobileDevice()) {
-      // 先显示按钮
       clickedButton.style.right = '0';
-      
-      // 2秒后自动收回
       setTimeout(() => {
-        // 检查按钮是否仍然处于显示状态
         if (clickedButton.style.right === '0px') {
           clickedButton.style.right = '-35px';
         }
@@ -541,7 +727,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
   
-  // 为桌面端保持 hover 效果
+  // 4. 桌面端hover效果
   if (!isMobileDevice()) {
     sidenavButtons.forEach(button => {
       button.addEventListener('mouseenter', function() {
@@ -554,23 +740,54 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // 监听窗口大小变化，在切换到桌面端时重置样式
+  // 5. 监听窗口大小变化
   window.addEventListener('resize', function() {
+    // sidenav按钮处理
     if (!isMobileDevice()) {
-      // 在桌面端，重置所有按钮位置并重新启用 hover 效果
       sidenavButtons.forEach(button => {
         button.style.right = '-38px';
         button.style.transition = '0.3s';
       });
     } else {
-      // 在移动端，设置过渡效果
       sidenavButtons.forEach(button => {
         button.style.transition = 'right 0.3s ease';
       });
     }
+    
+    // 如果窗口大小改变导致设备类型变化，重新初始化背景
+    const isBase64 = document.body.classList.contains('base64-bg');
+    
+    if (isMobileDevice()) {
+      // 切换到移动端
+      if (isBase64) {
+        // 保持base64图片（平铺）
+        setBase64Wallpaper();
+      } else {
+        // 使用移动端必应壁纸
+        setMobileBingWallpaper();
+      }
+    } else {
+      // 切换到桌面端
+      if (isBase64) {
+        // 保持base64图片
+        setBase64Wallpaper();
+      } else {
+        // 检查当前是必应壁纸还是本地图片
+        const currentBg = document.body.style.backgroundImage;
+        const isBing = currentBg.includes('dujin.org') || currentBg.includes('bing');
+        
+        if (isBing) {
+          // 保持必应壁纸
+          setDesktopBingWallpaper();
+        } else {
+          // 使用随机本地图片
+          setRandomLocalBackground();
+        }
+      }
+    }
   });
   
-  // 初始化：根据当前设备设置正确的样式
+  // 6. 初始化设备样式
   if (isMobileDevice()) {
     sidenavButtons.forEach(button => {
       button.style.transition = 'right 0.3s ease';
@@ -603,7 +820,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <a href="#popular" id="sidenavd">顶部</a>
     <a href="#software" id="sidenavc">软件</a>
     <a href="#other" id="sidenavb">其他</a>
-    <!-- 移除onclick属性，现在通过事件委托处理 -->
+    <!-- 壁纸切换按钮 -->
     <a id="sidenava">壁纸</a>
   </div> 
 
@@ -934,7 +1151,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
-
-
-
-
