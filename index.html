@@ -88,7 +88,7 @@ html, body {
     --total-fixed-height: calc(var(--top-space-height) + var(--search-fixed-height));
   }
   
-/*  .content-scrollable {
+  .content-scrollable {
     -webkit-mask-image: linear-gradient(
       to bottom,
       rgba(0, 0, 0, 0) 0%,
@@ -104,7 +104,7 @@ html, body {
       rgba(0, 0, 0, 0) 100%
     );
   }
- */ 
+  
   #sidenav a {
     transition: right 0.3s ease;
   }
@@ -160,7 +160,7 @@ html, body {
   color: #eeeeee;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
   outline: none;				
-  border-bottom: 2px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
   background-color: rgba(0, 0, 0, 0.3);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
   border-radius: 0px;
@@ -297,9 +297,32 @@ html, body {
   -moz-transition: all 0.2s ease-out;
   -webkit-transition: all 0.2s ease-out;
   -o-transition: all 0.2s ease-out;
+  position: relative; /* 添加相对定位 */
 }
 .column:hover {
   background-color: rgba(0, 0, 0, 0.6);
+}
+.column:hover .card-tit::after {
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  animation: slideInFromCenter 0.3s ease forwards;
+  transform: translateX(-50%);
+}
+
+/* 从中间向两边展开的动画 */
+@keyframes slideInFromCenter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%; /* 这会匹配.card-tit的实际文本宽度 */
+  }
 }
 .card-tit {
   color: #e2e2e2;
@@ -314,6 +337,9 @@ html, body {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  position: relative;
+  display: inline-block; /* 关键：让宽度由内容决定 */
+  max-width: 100%; /* 防止超出容器 */
 }
 desc-l{
   color: #d0d0d0;
@@ -431,6 +457,10 @@ body {
     width: 30.33%;
     margin: 3% 1.5% 3% 1.5%;
   }
+  .column:hover .card-tit::after {
+  height: 0px;
+  }
+
   .card-tit {
     color: #cdcdcd;
     padding: 12px 1px 12px 1px;
@@ -525,7 +555,7 @@ const localBackgroundImages = [
 // 如果图片有规律的命名（比如 bg1.jpg, bg2.jpg...），可以使用循环自动生成
 // 取消下面的注释，并修改 totalImages 为你的实际图片数量：
 
-const totalImages = 20; // 你的图片总数
+const totalImages = 18; // 你的图片总数
 const localBackgroundImages = [];
 for (let i = 1; i <= totalImages; i++) {
   localBackgroundImages.push(`img/bg${i}.jpg`);
@@ -533,7 +563,10 @@ for (let i = 1; i <= totalImages; i++) {
 
 
 // Base64图片
-const base64Image = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/4QByRXhpZgAATU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAAExAAIAAAAQAAAAWgAAAAAAAABgAAAAAQAAAGAAAAABcGFpbnQubmV0IDQuMy4zAP/bAEMAAgEBAgEBAgICAgICAgIDBQMDAwMDBgQEAwUHBgcHBwYHBwgJCwkICAoIBwcKDQoKCwwMDAwHCQ4PDQwOCwwMDP/bAEMBAgICAwMDBgMDBgwIBwgMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDP/AABEIABUAFQMBIgACEQEDEQH/xAAfAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgv/xAC1EAACAQMDAgQDBQUEBAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+fr/xAAfAQADAQEBAQEBAQEBAAAAAAAAAQIDBAUGBwgJCgv/xAC1EQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/APbHktLnRCu61jXyhtUsreWSp6e4P9apAxiSNZCPLaUMwJAySRyfzH4U0Sstv5wjYfLuAVGCjr0rRubovCn+sG51A/ctlhkdPlyc5x/k0AWohp6ptxZBAcoBs6f5FFQ3EmG/1dx6/wCqb0H+zRQA0oy6MpVmX/R8rycrwMc5qaU4aHjO6WPP/fQoooA2rZjlvwooooA//9k=';
+// const base64Image = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/4QByRXhpZgAATU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAAExAAIAAAAQAAAAWgAAAAAAAABgAAAAAQAAAGAAAAABcGFpbnQubmV0IDQuMy4zAP/bAEMAAgEBAgEBAgICAgICAgIDBQMDAwMDBgQEAwUHBgcHBwYHBwgJCwkICAoIBwcKDQoKCwwMDAwHCQ4PDQwOCwwMDP/bAEMBAgICAwMDBgMDBgwIBwgMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDP/AABEIABUAFQMBIgACEQEDEQH/xAAfAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgv/xAC1EAACAQMDAgQDBQUEBAAAAX0BAgMABBEFEiExQQYTUWEHInEUMoGRoQgjQrHBFVLR8CQzYnKCCQoWFxgZGiUmJygpKjQ1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4eLj5OXm5+jp6vHy8/T19vf4+fr/xAAfAQADAQEBAQEBAQEBAAAAAAAAAQIDBAUGBwgJCgv/xAC1EQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/APbHktLnRCu61jXyhtUsreWSp6e4P9apAxiSNZCPLaUMwJAySRyfzH4U0Sstv5wjYfLuAVGCjr0rRubovCn+sG51A/ctlhkdPlyc5x/k0AWohp6ptxZBAcoBs6f5FFQ3EmG/1dx6/wCqb0H+zRQA0oy6MpVmX/R8rycrwMc5qaU4aHjO6WPP/fQoooA2rZjlvwooooA//9k=';
+
+// 图片
+const base64Image = 'img/bg.jpg';
 
 // 必应壁纸URL
 const bingWallpaperUrls = {
@@ -849,7 +882,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
       
       <div class="column">
-          <a href="https://m.guancha.cn">
+          <a href="https://www.guancha.cn/">
             <div class="card-tit">观察者网</div>
             <div class=<desc-c><desc-l><desc-h>新闻，时事，评论</div>
           </a>
@@ -1156,16 +1189,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
