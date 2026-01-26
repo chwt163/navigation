@@ -406,17 +406,17 @@ body {
     background-size: cover;
   }
   
-  /* Base64图片的特殊样式 - 平铺显示  （跟下面二选一）*/
- /* body.base64-bg {
+  /* Base64图片的特殊样式 - 平铺显示 （跟下面二选一）
+  body.base64-bg {
     background-repeat: repeat !important;
     background-attachment: fixed !important;
-    background-size: auto !important;  
+    background-size: auto !important; 
     background-position: 0 0 !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
   }*/
-
-  /*使用固定图片 （跟上面二选一）*/
+  
+    /* 使用固定图片 （跟上面二选一）*/
   body.base64-bg {
     background-attachment: fixed;
     background-position: center;
@@ -682,16 +682,18 @@ function setMobileBingWallpaper() {
 // 设置Base64图片（移动端点击按钮时使用）（跟下面二选一）
 //function setBase64Wallpaper() {
   // 设置Base64图片并应用平铺样式
- // document.body.style.backgroundImage = `url('${base64Image}')`;
- // document.body.style.backgroundRepeat = 'repeat';    // 平铺
- // document.body.style.backgroundSize = 'auto';        // 不拉伸
- // document.body.style.backgroundPosition = '0 0';     // 从左上角开始
- // document.body.classList.add('base64-bg');           // 添加base64样式类
+  //document.body.style.backgroundImage = `url('${base64Image}')`;
+  //document.body.style.backgroundRepeat = 'repeat';    // 平铺
+  //document.body.style.backgroundSize = 'auto';        // 不拉伸
+  //document.body.style.backgroundPosition = '0 0';     // 从左上角开始
+  //document.body.classList.add('base64-bg');           // 添加base64样式类
   
- // console.log('切换到Base64图片（平铺显示）');
+  //console.log('切换到Base64图片（平铺显示）');
 //}
-  
-  // 使用固定图片 （跟上面二选一）
+
+// 使用固定图片（移动端点击按钮时使用）（跟上面二选一）
+function setBase64Wallpaper() {
+  // 设置Base64图片并应用平铺样式
   document.body.style.backgroundImage = `url('${base64Image}')`;
   document.body.style.backgroundRepeat = 'no-repeat';
   document.body.style.backgroundSize = 'cover';
@@ -700,7 +702,7 @@ function setMobileBingWallpaper() {
   
   console.log('切换到Base64图片（平铺显示）');
 }
-  
+
 // 重置背景样式为默认（用于从Base64切换回其他壁纸）
 function resetBackgroundStyle() {
   document.body.style.backgroundRepeat = 'no-repeat';
@@ -900,7 +902,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
       
       <div class="column">
-          <a href="https://m.guancha.cn/">
+          <a href="https://www.guancha.cn/">
             <div class="card-tit">观察者网</div>
             <div class=<desc-c><desc-l><desc-h>新闻，时事，评论</div>
           </a>
@@ -1207,6 +1209,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
-
 
 
