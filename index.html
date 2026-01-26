@@ -408,12 +408,10 @@ body {
   
   /* Base64图片的特殊样式 - 平铺显示 */
   body.base64-bg {
-    background-repeat: repeat !important;
-    background-attachment: fixed !important;
-    background-size: auto !important;  /* 改为auto，不平铺拉伸 */
-    background-position: 0 0 !important;
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
   
   .search-form {
@@ -1200,6 +1198,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
+
 
 
 
