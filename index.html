@@ -406,22 +406,14 @@ body {
     background-size: cover;
   }
   
-  /* Base64图片的特殊样式 - 平铺显示 （跟下面二选一）
+  /* Base64图片的特殊样式 - 平铺显示 */
   body.base64-bg {
     background-repeat: repeat !important;
     background-attachment: fixed !important;
-    background-size: auto !important; 
+    background-size: auto !important;  /* 改为auto，不平铺拉伸 */
     background-position: 0 0 !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
-  }*/
-  
-    /* 使用固定图片 （跟上面二选一）*/
-  body.base64-bg {
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
   }
   
   .search-form {
@@ -679,25 +671,13 @@ function setMobileBingWallpaper() {
   console.log('移动端：使用必应壁纸');
 }
 
-// 设置Base64图片（移动端点击按钮时使用）（跟下面二选一）
-//function setBase64Wallpaper() {
-  // 设置Base64图片并应用平铺样式
-  //document.body.style.backgroundImage = `url('${base64Image}')`;
-  //document.body.style.backgroundRepeat = 'repeat';    // 平铺
-  //document.body.style.backgroundSize = 'auto';        // 不拉伸
-  //document.body.style.backgroundPosition = '0 0';     // 从左上角开始
-  //document.body.classList.add('base64-bg');           // 添加base64样式类
-  
-  //console.log('切换到Base64图片（平铺显示）');
-//}
-
-// 使用固定图片（移动端点击按钮时使用）（跟上面二选一）
+// 设置Base64图片（移动端点击按钮时使用）
 function setBase64Wallpaper() {
   // 设置Base64图片并应用平铺样式
   document.body.style.backgroundImage = `url('${base64Image}')`;
-  document.body.style.backgroundRepeat = 'no-repeat';
-  document.body.style.backgroundSize = 'cover';
-  document.body.style.backgroundPosition = 'center';
+  document.body.style.backgroundRepeat = 'repeat';    // 平铺
+  document.body.style.backgroundSize = 'auto';        // 不拉伸
+  document.body.style.backgroundPosition = '0 0';     // 从左上角开始
   document.body.classList.add('base64-bg');           // 添加base64样式类
   
   console.log('切换到Base64图片（平铺显示）');
