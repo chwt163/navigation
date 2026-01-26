@@ -408,7 +408,7 @@ body {
   
   /* Base64图片的特殊样式 - 平铺显示 */
   body.base64-bg {
-   
+    background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -684,6 +684,7 @@ function setMobileBingWallpaper() {
 // 使用固定图片（移动端点击按钮时使用）（跟上面二选一）
 function setBase64Wallpaper() {
   document.body.style.backgroundImage = `url('${base64Image}')`;
+  document.body.style.backgroundattachment = 'fixed';
   document.body.style.backgroundRepeat = 'no-repeat';
   document.body.style.backgroundSize = 'cover';
   document.body.style.backgroundPosition = 'center';
@@ -1198,6 +1199,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
+
 
 
 
