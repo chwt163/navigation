@@ -297,22 +297,10 @@ html, body {
   -moz-transition: all 0.2s ease-out;
   -webkit-transition: all 0.2s ease-out;
   -o-transition: all 0.2s ease-out;
-  position: relative; /* 添加相对定位 */
+  position: relative;
 }
 .column:hover {
   background-color: rgba(0, 0, 0, 0.6);
-}
-.column:hover .card-tit::after {
-  content: '';
-  position: absolute;
-  bottom: 0px;
-  left: 50%;
-  width: 0;
-  height: 2px;
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-  animation: slideInFromCenter 0.3s ease forwards;
-  transform: translateX(-50%);
 }
 
 /* 从中间向两边展开的动画 */
@@ -321,9 +309,21 @@ html, body {
     width: 0;
   }
   to {
-    width: 100%; /* 这会匹配.card-tit的实际文本宽度 */
+    width: 100%;
   }
 }
+
+/* 确保链接覆盖整个卡片区域 */
+.column > a {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
 .card-tit {
   color: #e2e2e2;
   font-size: 14px;
@@ -338,9 +338,33 @@ html, body {
   text-overflow: ellipsis;
   white-space: nowrap;
   position: relative;
-  display: inline-block; /* 关键：让宽度由内容决定 */
-  max-width: 100%; /* 防止超出容器 */
+  display: inline-block; /* 改回inline-block */
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  width: fit-content; /* 关键：宽度适应内容 */
 }
+
+/* 下划线样式 - 使用伪元素 */
+.card-tit::after {
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  left: 0; /* 从左侧开始 */
+  width: 100%; /* 100%就是.card-tit的宽度 */
+  height: 2px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease;
+  pointer-events: none;
+}
+
+.column:hover .card-tit::after {
+  transform: scaleX(1);
+}
+
 desc-l{
   color: #d0d0d0;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
@@ -392,21 +416,31 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-image: url('img/bg1005a.jpg');
+  background-image: url('img/bg1.jpg');
 }
 
 /* ========== 响应式设计 ========== */
 @media (max-width: 768px) {
   /* 移动端默认显示必应壁纸 */
   body {
-    background: url('img/bg-m.jpg');
+    background: url('https://api.dujin.org/bing/m.php');
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
   }
+ 
+   /* Base64图片平铺显示  --跟下面二选一
+  body.base64-bg {
+    background-repeat: repeat !important;
+    background-attachment: fixed !important;
+    background-size: auto !important;  
+    background-position: 0 0 !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }*/
   
-  /* Base64图片的特殊样式 - 平铺显示 */
+  /* 固定图片  --跟上面二选一 */
   body.base64-bg {
     background-attachment: fixed;
     background-position: center;
@@ -455,8 +489,10 @@ body {
     width: 30.33%;
     margin: 3% 1.5% 3% 1.5%;
   }
+  
+  /* 移动端禁用下划线动画 */
   .column:hover .card-tit::after {
-  height: 0px;
+    width: 0;
   }
 
   .card-tit {
@@ -464,6 +500,13 @@ body {
     padding: 12px 1px 12px 1px;
     height: 30px;
   }
+  
+  /* 移动端调整下划线位置 */
+  .card-tit::after {
+    bottom: 8px;
+    height: 1px;
+  }
+  
   desc-l{
     color: #bbbbbb;
     padding-top: 8px;
@@ -521,6 +564,11 @@ body {
     background-attachment: fixed !important;
     background-size: auto !important;
     background-position: 0 0 !important;
+  }
+  
+  /* 横屏模式下调整下划线 */
+  .card-tit::after {
+    bottom: 6px;
   }
 }
 </style>
@@ -1185,6 +1233,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </body>
 </html>
+
 
 
 
